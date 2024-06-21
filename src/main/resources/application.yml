@@ -1,0 +1,11 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /study-activiti
+
+spring:
+  datasource:
+    username: activiti
+    password: activiti2024
+    url: jdbc:dm://124.70.17.102:30236/activiti
+    driver-class-name: dm.jdbc.driver.DmDriver
