@@ -1,12 +1,11 @@
 package com.study.config;
 
+import lombok.RequiredArgsConstructor;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.AbstractProcessEngineAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.Resource;
@@ -16,26 +15,19 @@ import javax.sql.DataSource;
 @Configuration
 public class ActivitiConfig extends AbstractProcessEngineAutoConfiguration {
 
-    @Bean
-    @Primary
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource activitiDataSource() {
-        return DataSourceBuilder.create().build();
-    }
+    @Autowired
+    private  DataSource dataSource;
 
     @Resource
-    PlatformTransactionManager activitiTransactionManager;
-
+    private PlatformTransactionManager activitiTransactionManager;
 
     @Bean
     public SpringProcessEngineConfiguration springProcessEngineConfiguration(){
-        System.out.println("注入activiti的config");
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
-         DataSource dataSource = activitiDataSource();
-         configuration.setDataSource(dataSource);
-         configuration.setDatabaseType("oracle");
-         configuration.setTransactionManager(activitiTransactionManager);
-         configuration.setDatabaseSchemaUpdate("none");
+        configuration.setDataSource(dataSource);
+        configuration.setDatabaseType("oracle");
+        configuration.setTransactionManager(activitiTransactionManager);
+        configuration.setDatabaseSchemaUpdate("none");
         return  configuration;
     }
 }
