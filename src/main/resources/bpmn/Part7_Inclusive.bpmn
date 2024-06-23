@@ -12,19 +12,16 @@
     <sequenceFlow id="_10" sourceRef="_2" targetRef="_4"/>
     <sequenceFlow id="_11" sourceRef="_4" targetRef="_5"/>
     <sequenceFlow id="_12" sourceRef="_5" targetRef="_7">
-      <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${day<3}]]>
-      </conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[
+        ]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_13" sourceRef="_5" targetRef="_8">
-      <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${day<6}]]>
-      </conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[
+        ]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_14" sourceRef="_5" targetRef="_9">
-      <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${day>=6}]]>
-      </conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[
+        ]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_15" sourceRef="_7" targetRef="_6"/>
     <sequenceFlow id="_16" sourceRef="_8" targetRef="_6"/>

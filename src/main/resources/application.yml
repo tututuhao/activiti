@@ -9,3 +9,4 @@ spring:
     password: activiti2024
     jdbc-url: jdbc:dm://124.70.17.102:30236/activiti
     driver-class-name: dm.jdbc.driver.DmDriver
+
