@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:activiti="http://activiti.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0gjd06j</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0gjd06j" sourceRef="StartEvent_1" targetRef="Activity_0xj674f" />
+    <bpmn:userTask id="Activity_0xj674f" name="提交注册信息" activiti:dueDate="2024-06-24T14:00:00">
+      <bpmn:extensionElements>
+        <activiti:executionListener class="" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0gjd06j</bpmn:incoming>
+      <bpmn:outgoing>Flow_02npkuz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_02npkuz" sourceRef="Activity_0xj674f" targetRef="Activity_0s0wl9v" />
+    <bpmn:userTask id="Activity_0s0wl9v" name="管理员审核" activiti:candidateGroups="admin">
+      <bpmn:extensionElements>
+        <activiti:taskListener class="" event="create" />
+        <activiti:inputOutput />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02npkuz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jtlv9l</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0d0n0q4">
+      <bpmn:incoming>Flow_0jtlv9l</bpmn:incoming>
+      <bpmn:outgoing>Flow_0awpusi</bpmn:outgoing>
+      <bpmn:outgoing>Flow_06my4e6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0jtlv9l" sourceRef="Activity_0s0wl9v" targetRef="Gateway_0d0n0q4" />
+    <bpmn:sequenceFlow id="Flow_0awpusi" sourceRef="Gateway_0d0n0q4" targetRef="Activity_1k9uzss">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${agree == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="Activity_1k9uzss" name="发送驳回短信" activiti:class="com.study.demo.service.SmsServiceTask" activiti:type="mail">
+      <bpmn:incoming>Flow_0awpusi</bpmn:incoming>
+      <bpmn:outgoing>Flow_0judhkh</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_06my4e6" sourceRef="Gateway_0d0n0q4" targetRef="Activity_1yuqhpy" />
+    <bpmn:sequenceFlow id="Flow_1x461pj" sourceRef="Activity_1yuqhpy" targetRef="Activity_0naqiv6" />
+    <bpmn:sendTask id="Activity_0naqiv6" name="发送注册成功短信" activiti:class="com.study.demo.service.SmsServiceTask" activiti:type="mail">
+      <bpmn:incoming>Flow_1x461pj</bpmn:incoming>
+      <bpmn:outgoing>Flow_14smuvt</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_04z15fc">
+      <bpmn:incoming>Flow_0judhkh</bpmn:incoming>
+      <bpmn:incoming>Flow_14smuvt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0judhkh" sourceRef="Activity_1k9uzss" targetRef="Event_04z15fc" />
+    <bpmn:sequenceFlow id="Flow_14smuvt" sourceRef="Activity_0naqiv6" targetRef="Event_04z15fc" />
+    <bpmn:serviceTask id="Activity_1yuqhpy" name="创建用户账户" activiti:class="com.study.demo.service.AccountServiceTask">
+      <bpmn:incoming>Flow_06my4e6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x461pj</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15ex7hk_di" bpmnElement="Activity_0xj674f">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t1ogcc_di" bpmnElement="Activity_0s0wl9v">
+        <dc:Bounds x="420" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0d0n0q4_di" bpmnElement="Gateway_0d0n0q4" isMarkerVisible="true">
+        <dc:Bounds x="585" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vae8we_di" bpmnElement="Activity_1k9uzss">
+        <dc:Bounds x="700" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nklwzm_di" bpmnElement="Activity_0naqiv6">
+        <dc:Bounds x="870" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04z15fc_di" bpmnElement="Event_04z15fc">
+        <dc:Bounds x="938" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08fbmjf_di" bpmnElement="Activity_1yuqhpy">
+        <dc:Bounds x="700" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0gjd06j_di" bpmnElement="Flow_0gjd06j">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02npkuz_di" bpmnElement="Flow_02npkuz">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="420" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jtlv9l_di" bpmnElement="Flow_0jtlv9l">
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="585" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0awpusi_di" bpmnElement="Flow_0awpusi">
+        <di:waypoint x="635" y="120" />
+        <di:waypoint x="700" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06my4e6_di" bpmnElement="Flow_06my4e6">
+        <di:waypoint x="610" y="145" />
+        <di:waypoint x="610" y="230" />
+        <di:waypoint x="700" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x461pj_di" bpmnElement="Flow_1x461pj">
+        <di:waypoint x="800" y="230" />
+        <di:waypoint x="870" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0judhkh_di" bpmnElement="Flow_0judhkh">
+        <di:waypoint x="800" y="120" />
+        <di:waypoint x="938" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14smuvt_di" bpmnElement="Flow_14smuvt">
+        <di:waypoint x="970" y="230" />
+        <di:waypoint x="1041" y="230" />
+        <di:waypoint x="1041" y="120" />
+        <di:waypoint x="974" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
