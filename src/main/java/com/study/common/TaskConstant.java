@@ -16,4 +16,11 @@ public class TaskConstant {
     public static String MESSAGE = "message";
     public static String NAME = "name";
     public static String COLLEGE = "college";
+
+    /**
+     * 任务流转发起人
+     */
+    public static String INITIATOR = "initiator";
+    public static String AGREE = "agree";
+    public static String DAY = "day";
 }

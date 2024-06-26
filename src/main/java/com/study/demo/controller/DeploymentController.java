@@ -32,4 +32,5 @@ public class DeploymentController {
                 .deploy();
         log.info("部署成功,流程定义id:{}", repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list().get(0).getId());
     }
+
 }

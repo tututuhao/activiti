@@ -2,6 +2,7 @@ package com.study.demo;
 
 import com.study.common.TaskConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -32,14 +33,17 @@ public class DemoTest {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private HistoryService historyService;
+
     /**
      * 部署
      */
     @Test
     public void initDeployment(){
         Deployment deployment = repositoryService.createDeployment()
-                .addClasspathResource("bpmn/Process_1.bpmn20.xml")
-                .name("任务流程")
+                .addClasspathResource("bpmn/process_leave.bpmn20.xml")
+                .name("请假流程")
                 .deploy();
         log.info("部署成功，流程定义id：{}",
                 repositoryService.createProcessDefinitionQuery()
@@ -69,6 +73,7 @@ public class DemoTest {
                 .taskName("提交注册信息")
                 .singleResult();
         taskService.complete(task.getId());
+
     }
 
     /**
